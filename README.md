@@ -1,3 +1,3 @@
 # MCMC_simulations
 
-Files for simulating varius MCMC assignments
+Files for simulating various MCMC assignments
