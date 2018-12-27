@@ -17,7 +17,7 @@ def Proposal(RV):
     g = np.exp(-RV)
     return g
 
-def Rejection():
+def Rejection(mu,sigma):
     c = np.sqrt(2*np.exp(1)/np.pi)
 
     while True:
@@ -30,16 +30,19 @@ def Rejection():
         if f/(c*proposal) > U:
             R2 = np.random.rand()
             if R2 > 0.5:
-                return X
+                return (X*sigma+mu)
             else:
-                return -X
-print('Hej!')
-A = Rejection()
-N = 10000;
-test = np.zeros(N)
-for i in range(1,N):
-    test[i] = Rejection()
-plt.figure(1)
-plt.clf()
-plt.hist(test,14)
-#print(test)
+                return (-X*sigma+mu)
+            
+if __name__ == "__main__":
+    
+    print('Hej!')
+    A = Rejection(1,2)
+    N = 10000;
+    test = np.zeros(N)
+    for i in range(1,N):
+        test[i] = Rejection(10,1)
+    plt.figure(1)
+    plt.clf()
+    plt.hist(test,14)
+    #print(test)
