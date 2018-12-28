@@ -38,11 +38,13 @@ if __name__ == "__main__":
     
     print('Hej!')
     A = Rejection(1,2)
+    x_cont = np.linspace(-5,5,10001)   
     N = 10000;
     test = np.zeros(N)
     for i in range(1,N):
-        test[i] = Rejection(10,1)
+        test[i] = Rejection(0,1)
     plt.figure(1)
     plt.clf()
-    plt.hist(test,14)
+    plt.hist(test,50,density=True)
+    plt.plot(x_cont,NormalDist(x_cont))
     #print(test)
