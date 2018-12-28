@@ -13,7 +13,7 @@ from rejection_sample import Rejection,NormalDist,Proposal
 
 def alpha(xp,x,sigma):
     p = t_dist(xp)/t_dist(x) * q(x,xp,sigma)/q(xp,x,sigma)
-    print(p)
+    #print(p)
     return p
 
 
@@ -30,15 +30,17 @@ def t_dist(x):
     return f
 
 def main():
-    N = 10000
+    N = 1000
     x = 0
     
-    sigma = 100
+    sigma = 2           #7 ganska bra för uppgift b, annars 1 på upg a
     index = -1
     X = np.zeros(N)
     a_save = np.zeros(N)
-    Ex4 = np.zeros(N-1001)
+    Ex4 = np.zeros(N)
     for ii in range(0,N):
+        if ii%1000 == 0:
+            print(ii)
         index+=1
         mu = x
         xp = Rejection(mu,sigma) 
@@ -50,21 +52,27 @@ def main():
             #print('accept')
        
         X[ii] = x
-        if index > 1000:
-            Ex4[ii-1001] = np.mean(X[1000:index]**4)
+        if index > 100:
+            Ex4[ii] = np.mean(X[100:index]**4)
     x_cont = np.linspace(-10,10,10001)    
     plt.figure(1)
     plt.clf()
     plt.hist(X,50, density=True)
     plt.plot(x_cont,t_dist(x_cont))
+    plt.xlabel("X")
+    plt.ylabel("Count")
     
     plt.figure(2)
     plt.clf()
     plt.plot(X)
+    plt.xlabel("N")
+    plt.ylabel("X")
     
     plt.figure(3)
     plt.clf()
     plt.plot(Ex4)
+    plt.xlabel("N")
+    plt.ylabel("$E(X^4)$")
 
     """
     plt.figure(4)
