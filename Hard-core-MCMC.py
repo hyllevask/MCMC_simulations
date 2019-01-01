@@ -39,10 +39,10 @@ def sum_points(Grid):
     s = np.sum(Grid)
     return s
 
+plot_grid = 0
+N_step = 100
 
-N_step = 1000000
-
-N_grid = 80 #Size
+N_grid = 8 #Size
 Grid = np.zeros((N_grid+2,N_grid+2))
 n_save = np.zeros(N_step)
 
@@ -59,11 +59,16 @@ for ii in range(1,N_step):
     if U_a > 0.5:
         Grid[row,col] = CheckNeighbours(row,col,Grid)
         
+    if plot_grid == 1:
+        plt.figure(1)
+        plt.imshow(Grid)
+        plt.pause(0.001)
+        
     n_save[ii] = sum_points(Grid)
-    
-plt.plot(range(0,N_step),n_save/N_grid**2)
-plt.show()
-
+plt.show()   
+#plt.plot(range(0,N_step),n_save/N_grid**2)
+#plt.show()
+plt.figure(2)
 plt.plot(range(0,N_step),np.cumsum(n_save)/(1.+ np.array(range(0,N_step))))
 plt.show()
 
