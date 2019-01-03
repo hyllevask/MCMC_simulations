@@ -18,7 +18,7 @@ def alpha(xp,x,sigma):
 
 
 def q(x,xp,sigma):
-    mu = x  #0 för uppgift b x för uppgift a
+    mu = 0  #0 för uppgift b x för uppgift a
     Q = 1/np.sqrt(2*np.pi*sigma**2)*np.exp(-(xp-mu)**2 / (2*sigma**2))
     return Q
     
@@ -30,10 +30,10 @@ def t_dist(x):
     return f
 
 def main():
-    N = 1000
+    N = 100000
     x = 0
     
-    sigma = 2           #7 ganska bra för uppgift b, annars 1 på upg a
+    sigma = 15           #7 ganska bra för uppgift b, annars 1 på upg a
     index = -1
     X = np.zeros(N)
     a_save = np.zeros(N)
@@ -42,7 +42,7 @@ def main():
         if ii%1000 == 0:
             print(ii)
         index+=1
-        mu = x
+        mu = 0     #0 för uppgift b x för uppgift a
         xp = Rejection(mu,sigma) 
         a = alpha(xp,x,sigma)
         a_save[index] = a
@@ -60,7 +60,8 @@ def main():
     plt.hist(X,50, density=True)
     plt.plot(x_cont,t_dist(x_cont))
     plt.xlabel("X")
-    plt.ylabel("Count")
+    plt.ylabel("Probability density")
+    plt.title("Histogram of target distribution")
     
     plt.figure(2)
     plt.clf()
@@ -73,6 +74,7 @@ def main():
     plt.plot(Ex4)
     plt.xlabel("N")
     plt.ylabel("$E(X^4)$")
+    plt.title("Proposal N(0,"+str(sigma)+")")
 
     """
     plt.figure(4)
