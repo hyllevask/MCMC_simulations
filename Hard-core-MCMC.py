@@ -5,10 +5,13 @@ MCMC simulation of the hard-core model
 @author: johohm
 """
 import matplotlib.pyplot as plt
+import matplotlib.animation as animation
 import numpy as np
 
 
 #Define function Phi that chooses uniformly which vertex to choose
+
+    
 
 def phi(U,N):
     A = np.cumsum( np.ones((1,N))/N)    #Compute intervals 
@@ -39,10 +42,22 @@ def sum_points(Grid):
     s = np.sum(Grid)
     return s
 
-plot_grid = 0
-N_step = 100
+plot_grid = False
 
-N_grid = 8 #Size
+
+
+
+
+
+if plot_grid:
+    N_grid = 8
+    N_step = 1000
+    frames = []
+    fig = plt.figure(1)
+
+else: 
+    N_grid = 20 #Size
+    N_step = 100000
 Grid = np.zeros((N_grid+2,N_grid+2))
 n_save = np.zeros(N_step)
 
@@ -59,20 +74,26 @@ for ii in range(1,N_step):
     if U_a > 0.5:
         Grid[row,col] = CheckNeighbours(row,col,Grid)
         
-    if plot_grid == 1:
-        plt.figure(1)
-        plt.imshow(Grid)
-        plt.pause(0.001)
+    if plot_grid:
+        im = plt.imshow(Grid, animated=True)
+        frames.append([im])
         
     n_save[ii] = sum_points(Grid)
 plt.show()   
 #plt.plot(range(0,N_step),n_save/N_grid**2)
 #plt.show()
+n_save_cum = np.cumsum(n_save)
 plt.figure(2)
-plt.plot(range(0,N_step),np.cumsum(n_save)/(1.+ np.array(range(0,N_step))))
+plt.plot(range(0,N_step),n_save_cum/(1.+ np.array(range(0,N_step))))
+plt.xlabel("N")
+plt.ylabel("$E(n(x))$")
 plt.show()
+plt.grid()
 
-    
+if plot_grid:
+    ani = animation.ArtistAnimation(fig, frames, interval=50, blit=True,repeat_delay=1000)
+    plt.show()
+
     
     
 
