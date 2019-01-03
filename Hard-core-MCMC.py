@@ -56,7 +56,7 @@ if plot_grid:
     fig = plt.figure(1)
 
 else: 
-    N_grid = 20 #Size
+    N_grid = 40 #Size
     N_step = 100000
 Grid = np.zeros((N_grid+2,N_grid+2))
 n_save = np.zeros(N_step)
@@ -79,14 +79,17 @@ for ii in range(1,N_step):
         frames.append([im])
         
     n_save[ii] = sum_points(Grid)
+#print(n_save[-1])
 plt.show()   
 #plt.plot(range(0,N_step),n_save/N_grid**2)
 #plt.show()
 n_save_cum = np.cumsum(n_save)
 plt.figure(2)
+plt.clf()
 plt.plot(range(0,N_step),n_save_cum/(1.+ np.array(range(0,N_step))))
 plt.xlabel("N")
 plt.ylabel("$E(n(x))$")
+plt.title("Convergens for "+str(N_grid)+"x"+str(N_grid)+" grid")
 plt.show()
 plt.grid()
 
