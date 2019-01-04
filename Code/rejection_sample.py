@@ -7,7 +7,7 @@ Kod för rejection sampling. Uppgift 6 i assignment 4
 import matplotlib.pyplot as plt
 import numpy as np
 def NormalDist(RV):
-    #pdf of normal dist
+    #pdf of N(0,1) dist
     f = 1/np.sqrt(2*np.pi)*np.exp(-(RV)**2 / (2))
     return f
 
@@ -17,7 +17,7 @@ def Proposal(RV):
     return g
 
 def Rejection(mu,sigma):
-    c = np.sqrt(2*np.exp(1)/np.pi)
+    c = np.sqrt(2*np.exp(1)/np.pi)          #COnstant
     while True:
         #sample from exponential
         X = -np.log(np.random.rand())
@@ -27,23 +27,25 @@ def Rejection(mu,sigma):
         proposal = Proposal(X)
         f = NormalDist(X)
         
-        if f/(c*proposal) > U:
+        if f/(c*proposal) > U:      #Check condition and keep if true otherwise discard
             R2 = np.random.rand()
             if R2 > 0.5:
                 return (X*sigma+mu)
             else:
                 return (-X*sigma+mu)
             
-if __name__ == "__main__":
+if __name__ == "__main__":      #Have to do this for importing
     
-    A = Rejection(1,2)
+    
     x_cont = np.linspace(-5,5,10001)   
-    N = 100000;
+    N = 100000;             #Time steps
     test = np.zeros(N)
     sigma = 3
     mu = 0
-    for i in range(1,N):
-        test[i] = Rejection(mu,sigma)
+    for i in range(1,N):        
+        test[i] = Rejection(mu,sigma)       #Call function
+    
+    #Plot
     plt.figure(1)
     plt.clf()
     plt.hist(test,50,density=True)
