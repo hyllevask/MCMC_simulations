@@ -1,13 +1,11 @@
 # -*- coding: utf-8 -*-
 """
 Created on Wed Dec 19 09:50:22 2018
-Hej igen
-@author: johohm
+Kod för rejection sampling. Uppgift 6 i assignment 4
+@author: Johan Öhman
 """
-
 import matplotlib.pyplot as plt
 import numpy as np
-
 def NormalDist(RV):
     #pdf of normal dist
     f = 1/np.sqrt(2*np.pi)*np.exp(-(RV)**2 / (2))
@@ -20,7 +18,6 @@ def Proposal(RV):
 
 def Rejection(mu,sigma):
     c = np.sqrt(2*np.exp(1)/np.pi)
-
     while True:
         #sample from exponential
         X = -np.log(np.random.rand())
